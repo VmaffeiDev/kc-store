@@ -166,12 +166,13 @@ export async function POST(request: Request) {
         orderNumber: order.number,
         customerEmail: order.customerEmail,
         total,
-        items: order.items.map((item) => ({
-          id: item.sku,
-          title: `${item.productName} - ${item.size}/${item.color}`,
-          quantity: item.quantity,
-          unitPrice: Number(item.unitPrice),
-        })),
+        expiresAt,
+        itemSummary: order.items
+          .map(
+            (item) =>
+              `${item.quantity}x ${item.productName} ${item.size}/${item.color}`,
+          )
+          .join(", "),
       });
       await prisma.order.update({
         where: { id: order.id },

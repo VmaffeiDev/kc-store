@@ -14,10 +14,12 @@ export async function POST(
     const prisma = getPrisma();
     const order = await prisma.order.findUnique({
       where: { id },
-      include: { items: true },
     });
     if (!order?.mercadoPagoPaymentId || order.paymentStatus !== "APPROVED") {
       throw new Error("Pedido pago nao encontrado.");
+    }
+    if (order.mercadoPagoRefundId) {
+      throw new Error("O reembolso deste pedido ja foi solicitado.");
     }
     const refund = await refundPayment(
       order.mercadoPagoPaymentId,
@@ -27,34 +29,36 @@ export async function POST(
       await tx.order.update({
         where: { id: order.id },
         data: {
-          paymentStatus: "REFUNDED",
-          orderStatus: "CANCELLED",
           mercadoPagoRefundId: String(refund.id),
+          notes: [order.notes, "Reembolso integral solicitado ao Mercado Pago."]
+            .filter(Boolean)
+            .join("\n"),
         },
       });
-      for (const item of order.items) {
-        await tx.productVariant.update({
-          where: { id: item.variantId },
-          data: { stock: { increment: item.quantity } },
-        });
-      }
       await tx.auditLog.create({
         data: {
           actorId: actor.id,
-          action: "ORDER_REFUNDED",
+          action: "ORDER_REFUND_REQUESTED",
           entity: "Order",
           entityId: order.id,
-          metadata: { refundId: refund.id },
+          metadata: { refundId: refund.id, refundStatus: refund.status },
         },
       });
     });
     await queueEmail({
       to: order.customerEmail,
-      subject: `Reembolso confirmado - ${order.number}`,
-      template: "order-refunded",
-      payload: { message: "Seu reembolso integral foi solicitado com sucesso." },
+      subject: `Reembolso solicitado - ${order.number}`,
+      template: "order-refund-requested",
+      payload: {
+        message:
+          "Seu reembolso integral foi solicitado. Enviaremos uma nova confirmacao quando o Mercado Pago concluir o estorno.",
+      },
     });
-    return Response.json({ ok: true, refundId: refund.id });
+    return Response.json({
+      ok: true,
+      refundId: refund.id,
+      status: refund.status,
+    });
   } catch (error) {
     const message = getErrorMessage(error);
     return Response.json(

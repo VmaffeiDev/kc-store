@@ -10,6 +10,7 @@ import {
   PiUsers,
   PiUserGear,
   PiClockCounterClockwise,
+  PiCreditCard,
   PiStorefront,
 } from "react-icons/pi";
 
@@ -20,6 +21,7 @@ const links = [
   ["/admin/cupons", "Cupons", PiTicket],
   ["/admin/clientes", "Clientes", PiUsers],
   ["/admin/equipe", "Equipe", PiUserGear],
+  ["/admin/integracoes", "Integracoes", PiCreditCard],
   ["/admin/auditoria", "Auditoria", PiClockCounterClockwise],
 ] as const;
 

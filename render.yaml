@@ -32,8 +32,12 @@ services:
         sync: false
       - key: MERCADO_PAGO_ACCESS_TOKEN
         sync: false
+      - key: NEXT_PUBLIC_MERCADO_PAGO_PUBLIC_KEY
+        sync: false
       - key: MERCADO_PAGO_WEBHOOK_SECRET
         sync: false
+      - key: MERCADO_PAGO_STATEMENT_DESCRIPTOR
+        value: KC STORE
       - key: MELHOR_ENVIO_TOKEN
         sync: false
       - key: RESEND_API_KEY

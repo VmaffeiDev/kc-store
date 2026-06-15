@@ -7,7 +7,9 @@ const envSchema = z.object({
   OPENAI_API_KEY: z.string().optional(),
   OPENAI_MODEL: z.string().default("gpt-5.4-mini"),
   MERCADO_PAGO_ACCESS_TOKEN: z.string().optional(),
+  NEXT_PUBLIC_MERCADO_PAGO_PUBLIC_KEY: z.string().optional(),
   MERCADO_PAGO_WEBHOOK_SECRET: z.string().optional(),
+  MERCADO_PAGO_STATEMENT_DESCRIPTOR: z.string().max(13).default("KC STORE"),
   MELHOR_ENVIO_BASE_URL: z
     .string()
     .url()
