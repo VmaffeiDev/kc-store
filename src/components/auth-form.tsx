@@ -4,7 +4,13 @@ import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
-export function AuthForm({ mode }: { mode: "login" | "register" }) {
+export function AuthForm({
+  mode,
+  callbackUrl = "/minha-conta",
+}: {
+  mode: "login" | "register";
+  callbackUrl?: string;
+}) {
   const router = useRouter();
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
@@ -42,11 +48,11 @@ export function AuthForm({ mode }: { mode: "login" | "register" }) {
           redirect: false,
         });
         if (result?.error) {
-          setMessage("Confira e-mail e senha. O banco deve estar configurado.");
+          setMessage("Confira o e-mail e a senha informados.");
           setLoading(false);
           return;
         }
-        router.push("/minha-conta");
+        router.push(callbackUrl);
         router.refresh();
       }}
     >

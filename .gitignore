@@ -44,3 +44,7 @@ yarn-error.log*
 next-env.d.ts
 
 /src/generated/prisma
+/data/runtime-products.json
+/data/runtime-products.json.tmp
+/public/uploads/*
+!/public/uploads/.gitkeep

@@ -19,8 +19,8 @@ test("customer can add a product and open the cart", async ({ page }) => {
   await expect(page.getByRole("link", { name: "Finalizar compra" })).toBeVisible();
 });
 
-test("admin demo dashboard is available without production credentials", async ({ page }) => {
+test("admin dashboard requires credentials", async ({ page }) => {
   await page.goto("/admin/dashboard");
-  await expect(page.getByRole("heading", { name: "Dashboard" })).toBeVisible();
-  await expect(page.getByText("Modo demonstracao")).toBeVisible();
+  await expect(page).toHaveURL(/\/entrar\?callbackUrl=\/admin\/dashboard$/);
+  await expect(page.getByRole("heading", { name: "Entrar" })).toBeVisible();
 });

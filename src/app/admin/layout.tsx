@@ -8,11 +8,9 @@ export default async function AdminLayout({
   children: React.ReactNode;
 }) {
   const demo = !process.env.DATABASE_URL;
-  if (!demo) {
-    const session = await auth();
-    if (!session?.user || !["OWNER", "STAFF"].includes(session.user.role)) {
-      redirect("/entrar");
-    }
+  const session = await auth();
+  if (!session?.user || !["OWNER", "STAFF"].includes(session.user.role)) {
+    redirect("/entrar?callbackUrl=/admin/dashboard");
   }
   return <AdminShell demo={demo}>{children}</AdminShell>;
 }

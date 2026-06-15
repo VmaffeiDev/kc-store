@@ -1,9 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
 import { PiPencil, PiPlus, PiTrash } from "react-icons/pi";
-import { formatCurrency, products } from "@/data/catalog";
+import { formatCurrency } from "@/data/catalog";
+import { getCatalogProducts } from "@/lib/local-catalog";
 
-export default function AdminProductsPage() {
+export const dynamic = "force-dynamic";
+
+export default async function AdminProductsPage() {
+  const products = await getCatalogProducts();
   return (
     <div>
       <div className="flex flex-wrap items-end justify-between gap-4">

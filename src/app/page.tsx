@@ -1,4 +1,4 @@
-import dynamic from "next/dynamic";
+import nextDynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -8,11 +8,13 @@ import {
   PiShieldCheck,
   PiWhatsappLogo,
 } from "react-icons/pi";
-import { products } from "@/data/catalog";
 import { ProductCard } from "@/components/product-card";
 import { whatsappUrl } from "@/lib/contact";
+import { getCatalogProducts } from "@/lib/local-catalog";
 
-const HeroThree = dynamic(() =>
+export const dynamic = "force-dynamic";
+
+const HeroThree = nextDynamic(() =>
   import("@/components/hero-three").then((module) => module.HeroThree),
 );
 
@@ -40,7 +42,8 @@ const categories = [
   },
 ];
 
-export default function Home() {
+export default async function Home() {
+  const products = (await getCatalogProducts()).slice(0, 5);
   return (
     <>
       <section className="relative overflow-hidden bg-[#efe2cf]">

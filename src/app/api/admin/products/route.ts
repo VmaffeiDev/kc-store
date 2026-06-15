@@ -2,6 +2,8 @@ import { z } from "zod";
 import { requireRole } from "@/lib/authorization";
 import { getPrisma } from "@/lib/prisma";
 import { getErrorMessage } from "@/lib/utils";
+import { saveRuntimeProduct } from "@/lib/local-catalog";
+import type { CatalogProduct } from "@/types/store";
 
 const schema = z.object({
   name: z.string().min(2),
@@ -13,6 +15,8 @@ const schema = z.object({
   style: z.string().optional(),
   color: z.string().min(2),
   size: z.string().min(1),
+  stock: z.coerce.number().int().nonnegative(),
+  image: z.string().startsWith("/uploads/"),
   shortDescription: z.string().min(10),
   description: z.string().min(20),
   seoTitle: z.string().optional(),
@@ -34,11 +38,38 @@ export async function POST(request: Request) {
   try {
     const actor = await requireRole(["OWNER", "STAFF"]);
     const input = schema.parse(await request.json());
-    const prisma = getPrisma();
     const suffix = Date.now().toString(36).toUpperCase();
     const sku = `KC-${input.genderCategory.slice(0, 3)}-${suffix}`;
     const sizes = input.size.split(",").map((item) => item.trim()).filter(Boolean);
     const colors = input.color.split(",").map((item) => item.trim()).filter(Boolean);
+    if (!process.env.DATABASE_URL) {
+      const product: CatalogProduct = {
+        id: `preview_${suffix.toLowerCase()}`,
+        name: input.name,
+        slug: `${slugify(input.name)}-${suffix.toLowerCase()}`,
+        sku,
+        category: input.category,
+        genderCategory: input.genderCategory,
+        price: input.price,
+        promotionalPrice:
+          typeof input.promotionalPrice === "number"
+            ? input.promotionalPrice
+            : undefined,
+        material: input.material || "Nao informado",
+        shortDescription: input.shortDescription,
+        description: input.description,
+        image: input.image,
+        badge: input.isPromotion ? "Promocao" : input.isFeatured ? "Novo" : undefined,
+        featured: Boolean(input.isFeatured),
+        sizes,
+        colors,
+        stock: input.stock,
+      };
+      await saveRuntimeProduct(product);
+      return Response.json(product, { status: 201 });
+    }
+
+    const prisma = getPrisma();
     const product = await prisma.product.create({
       data: {
         name: input.name,
@@ -61,13 +92,20 @@ export async function POST(request: Request) {
         isActive: Boolean(input.isActive),
         isFeatured: Boolean(input.isFeatured),
         isPromotion: Boolean(input.isPromotion),
+        images: {
+          create: {
+            url: input.image,
+            altText: input.name,
+            position: 0,
+          },
+        },
         variants: {
           create: sizes.flatMap((size) =>
             colors.map((color, index) => ({
               sku: `${sku}-${size}-${index + 1}`,
               size,
               color,
-              stock: 0,
+              stock: input.stock,
             })),
           ),
         },

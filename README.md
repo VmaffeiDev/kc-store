@@ -36,7 +36,11 @@ npm run prisma:seed
 npm run dev
 ```
 
-Sem `DATABASE_URL`, o storefront e o admin abrem em modo demonstrativo. Cadastro, persistência e checkout real exigem o banco.
+Sem `DATABASE_URL`, configure `PREVIEW_ADMIN_EMAIL`,
+`PREVIEW_ADMIN_PASSWORD` e `AUTH_SECRET` para ativar o painel temporário de
+pré-lançamento. Nesse modo, produtos e imagens ficam salvos localmente na
+máquina que executa o site. Migre os dados para PostgreSQL e Cloudinary antes
+do go-live.
 
 ## Serviços externos
 

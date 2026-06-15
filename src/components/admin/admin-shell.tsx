@@ -50,7 +50,7 @@ export function AdminShell({
             <p className="text-xs font-extrabold uppercase tracking-wider text-[#b75432]">K&amp;C STORE</p>
             <p className="font-display text-2xl">Painel administrativo</p>
           </div>
-          {demo && <span className="rounded-full bg-[#f5dfbd] px-3 py-1 text-[10px] font-extrabold uppercase tracking-wider text-[#75401f]">Modo demonstracao</span>}
+          {demo && <span className="rounded-full bg-[#f5dfbd] px-3 py-1 text-[10px] font-extrabold uppercase tracking-wider text-[#75401f]">Pre-lancamento local</span>}
         </header>
         <div className="border-b border-[#18211e]/10 bg-[#07362c] px-4 py-3 lg:hidden">
           <nav className="flex gap-4 overflow-x-auto text-xs text-white">
