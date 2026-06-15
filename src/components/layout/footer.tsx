@@ -8,6 +8,7 @@ import {
   PiEnvelopeSimple,
 } from "react-icons/pi";
 import { NewsletterForm } from "@/components/newsletter-form";
+import { whatsappUrl } from "@/lib/contact";
 
 export function Footer() {
   const pathname = usePathname();
@@ -25,7 +26,13 @@ export function Footer() {
             <a aria-label="Instagram" href={process.env.NEXT_PUBLIC_INSTAGRAM_URL ?? "#"} className="grid size-10 place-items-center rounded-full border border-white/20">
               <PiInstagramLogo size={20} />
             </a>
-            <a aria-label="WhatsApp" href="#" className="grid size-10 place-items-center rounded-full border border-white/20">
+            <a
+              aria-label="WhatsApp: (41) 98419-0059"
+              href={whatsappUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="grid size-10 place-items-center rounded-full border border-white/20"
+            >
               <PiWhatsappLogo size={20} />
             </a>
             <a aria-label="E-mail" href="mailto:contato@kcstore.com.br" className="grid size-10 place-items-center rounded-full border border-white/20">

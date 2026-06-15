@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { PiCheck, PiShoppingBagOpen, PiWhatsappLogo } from "react-icons/pi";
+import { whatsappUrl } from "@/lib/contact";
 import type { CatalogProduct } from "@/types/store";
 import { formatCurrency } from "@/data/catalog";
 import { useCart } from "@/stores/cart";
@@ -71,7 +72,14 @@ export function ProductDetail({ product }: { product: CatalogProduct }) {
             <button onClick={add} className="button-primary"><PiShoppingBagOpen size={20} /> Adicionar ao carrinho</button>
             <Link href="/carrinho" onClick={add} className="button-secondary">Comprar agora</Link>
           </div>
-          <a href="#" className="mt-3 flex h-12 items-center justify-center gap-2 border border-[#0d4638]/20 text-sm font-bold text-[#0d4638]"><PiWhatsappLogo size={20} /> Tirar duvida no WhatsApp</a>
+          <a
+            href={whatsappUrl}
+            target="_blank"
+            rel="noreferrer"
+            className="mt-3 flex h-12 items-center justify-center gap-2 border border-[#0d4638]/20 text-sm font-bold text-[#0d4638]"
+          >
+            <PiWhatsappLogo size={20} /> Tirar duvida no WhatsApp
+          </a>
           <div className="mt-8 grid gap-3 border-t border-[#18211e]/10 pt-6 text-xs text-[#5c625e]">
             <p><strong>Material:</strong> {product.material}</p>
             <p><strong>Postagem:</strong> em ate 5 dias uteis apos a confirmacao do pagamento.</p>

@@ -11,6 +11,7 @@ import {
   PiWhatsappLogo,
   PiX,
 } from "react-icons/pi";
+import { whatsappUrl } from "@/lib/contact";
 import { useCart } from "@/stores/cart";
 
 const nav = [
@@ -29,7 +30,6 @@ export function Header() {
   const count = useCart((state) =>
     state.items.reduce((sum, item) => sum + item.quantity, 0),
   );
-  const whatsapp = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "5511999999999";
   if (pathname.startsWith("/admin")) return null;
 
   return (
@@ -82,7 +82,7 @@ export function Header() {
             )}
           </Link>
           <a
-            href={`https://wa.me/${whatsapp}`}
+            href={whatsappUrl}
             target="_blank"
             rel="noreferrer"
             className="hidden items-center gap-2 rounded-full border border-white/25 px-4 py-2 text-xs font-bold transition hover:border-[#d8a45b] hover:text-[#d8a45b] md:flex"

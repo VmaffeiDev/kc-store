@@ -10,6 +10,7 @@ import {
 } from "react-icons/pi";
 import { products } from "@/data/catalog";
 import { ProductCard } from "@/components/product-card";
+import { whatsappUrl } from "@/lib/contact";
 
 const HeroThree = dynamic(() =>
   import("@/components/hero-three").then((module) => module.HeroThree),
@@ -136,7 +137,12 @@ export default function Home() {
             <h2 className="font-display mt-2 text-5xl">Precisa de ajuda para escolher?</h2>
             <p className="mt-3 max-w-2xl text-sm leading-7 text-white/75">Nossa equipe ajuda com medidas, combinacoes e acompanhamento do pedido.</p>
           </div>
-          <a href="#" className="inline-flex h-14 items-center justify-center gap-3 rounded-sm bg-[#07362c] px-7 text-sm font-bold">
+          <a
+            href={whatsappUrl}
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex h-14 items-center justify-center gap-3 rounded-sm bg-[#07362c] px-7 text-sm font-bold"
+          >
             <PiWhatsappLogo size={22} /> Falar no WhatsApp
           </a>
         </div>
