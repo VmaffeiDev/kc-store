@@ -1,0 +1,2 @@
+import { DataTablePage } from "@/components/admin/data-table-page";
+export default function Page() { return <DataTablePage eyebrow="Acesso" title="Equipe" columns={["Nome", "E-mail", "Papel", "Status", "Ultimo acesso"]} rows={[["Proprietario K&C", "admin@example.com", "OWNER", "Ativo", "Hoje"], ["Atendimento", "equipe@example.com", "STAFF", "Ativo", "Ontem"]]} action={<button className="button-primary">Convidar pessoa</button>} />; }

@@ -1,0 +1,2 @@
+import { DataTablePage } from "@/components/admin/data-table-page";
+export default function Page() { return <DataTablePage eyebrow="Seguranca" title="Auditoria" columns={["Data", "Pessoa", "Acao", "Entidade", "Referencia"]} rows={[["15/06/2026 12:30", "Proprietario", "ORDER_REFUNDED", "Order", "KC260610X1"], ["15/06/2026 11:12", "Atendimento", "PRODUCT_UPDATED", "Product", "KC-FEM-005"], ["14/06/2026 18:45", "Proprietario", "STAFF_INVITED", "User", "equipe@example.com"]]} />; }
