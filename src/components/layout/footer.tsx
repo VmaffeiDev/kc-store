@@ -8,7 +8,7 @@ import {
   PiEnvelopeSimple,
 } from "react-icons/pi";
 import { NewsletterForm } from "@/components/newsletter-form";
-import { whatsappUrl } from "@/lib/contact";
+import { instagramUrl, whatsappUrl } from "@/lib/contact";
 
 export function Footer() {
   const pathname = usePathname();
@@ -23,7 +23,13 @@ export function Footer() {
             cada ocasiao.
           </p>
           <div className="mt-6 flex gap-3">
-            <a aria-label="Instagram" href={process.env.NEXT_PUBLIC_INSTAGRAM_URL ?? "#"} className="grid size-10 place-items-center rounded-full border border-white/20">
+            <a
+              aria-label="Instagram K&C STORE"
+              href={instagramUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="grid size-10 place-items-center rounded-full border border-white/20"
+            >
               <PiInstagramLogo size={20} />
             </a>
             <a
