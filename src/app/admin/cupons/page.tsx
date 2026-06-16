@@ -1,0 +1,2 @@
+import { DataTablePage } from "@/components/admin/data-table-page";
+export default function Page() { return <DataTablePage eyebrow="Campanhas" title="Cupons" columns={["Codigo", "Tipo", "Desconto", "Validade", "Uso", "Status"]} rows={[["KCBEMVINDO", "Porcentagem", "10%", "31/12/2026", "18 / 100", "Ativo"], ["ESSENCIA20", "Valor fixo", "R$ 20,00", "30/09/2026", "7 / 50", "Ativo"]]} action={<button className="button-primary">Novo cupom</button>} />; }

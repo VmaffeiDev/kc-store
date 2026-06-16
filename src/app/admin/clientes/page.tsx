@@ -1,0 +1,2 @@
+import { DataTablePage } from "@/components/admin/data-table-page";
+export default function Page() { return <DataTablePage eyebrow="Relacionamento" title="Clientes" columns={["Cliente", "E-mail", "Telefone", "Pedidos", "Promocoes"]} rows={[["Marina Costa", "marina@example.com", "(11) 99999-1001", "4", "Autorizado"], ["Rafael Lima", "rafael@example.com", "(21) 99999-2002", "2", "Nao autorizado"], ["Luciana Alves", "luciana@example.com", "(31) 99999-3003", "1", "Autorizado"]]} />; }
