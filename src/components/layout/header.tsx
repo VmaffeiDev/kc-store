@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { usePathname } from "next/navigation";
 import {
+  PiInstagramLogo,
   PiList,
   PiMagnifyingGlass,
   PiShoppingBag,
@@ -11,7 +12,7 @@ import {
   PiWhatsappLogo,
   PiX,
 } from "react-icons/pi";
-import { whatsappUrl } from "@/lib/contact";
+import { instagramUrl, whatsappUrl } from "@/lib/contact";
 import { useCart } from "@/stores/cart";
 
 const nav = [
@@ -81,6 +82,15 @@ export function Header() {
               </span>
             )}
           </Link>
+          <a
+            href={instagramUrl}
+            aria-label="Instagram K&C STORE"
+            target="_blank"
+            rel="noreferrer"
+            className="hidden size-10 place-items-center rounded-full transition hover:bg-white/10 md:grid"
+          >
+            <PiInstagramLogo size={21} />
+          </a>
           <a
             href={whatsappUrl}
             target="_blank"
