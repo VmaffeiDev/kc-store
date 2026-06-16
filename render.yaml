@@ -12,7 +12,7 @@ services:
     plan: starter
     region: virginia
     buildCommand: npm ci && npm run build
-    preDeployCommand: npm run prisma:migrate
+    preDeployCommand: npm run prisma:migrate && npm run prisma:seed
     startCommand: npm start
     healthCheckPath: /api/health
     envVars:
@@ -27,6 +27,12 @@ services:
       - key: AUTH_TRUST_HOST
         value: true
       - key: NEXT_PUBLIC_SITE_URL
+        sync: false
+      - key: OWNER_NAME
+        value: Administracao K&C STORE
+      - key: OWNER_EMAIL
+        sync: false
+      - key: OWNER_PASSWORD
         sync: false
       - key: OPENAI_API_KEY
         sync: false

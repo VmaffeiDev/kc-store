@@ -91,6 +91,7 @@ npm run test:e2e
 ## Render
 
 O `render.yaml` cria web service, worker e PostgreSQL pagos na regiao Virginia,
-executa as migrations antes do deploy e usa `/api/health` como health check.
-Depois de criar o Blueprint, preencha as variaveis marcadas como `sync: false`
-e execute o seed uma vez com as credenciais definitivas do proprietario.
+executa migrations e seed no pre-deploy e usa `/api/health` como health check.
+Depois de criar o Blueprint, preencha as variaveis marcadas como `sync: false`.
+`OWNER_EMAIL` e `OWNER_PASSWORD` criam o acesso inicial do proprietario no
+primeiro deploy.
