@@ -8,19 +8,29 @@ import type { CatalogProduct } from "@/types/store";
 export function CatalogClient({
   products,
   initialAudience = "",
+  initialCategory = "",
   initialSearch = "",
   promotionOnly = false,
 }: {
   products: CatalogProduct[];
   initialAudience?: string;
+  initialCategory?: string;
   initialSearch?: string;
   promotionOnly?: boolean;
 }) {
   const [search, setSearch] = useState(initialSearch);
   const [audience, setAudience] = useState(initialAudience);
+  const [category, setCategory] = useState(initialCategory);
   const [size, setSize] = useState("");
   const [color, setColor] = useState("");
   const [sort, setSort] = useState("recentes");
+  const categories = useMemo(
+    () =>
+      Array.from(new Set(["Perfumes", ...products.map((product) => product.category)])).sort(
+        (a, b) => a.localeCompare(b, "pt-BR"),
+      ),
+    [products],
+  );
 
   const filtered = useMemo(() => {
     const normalized = search.trim().toLowerCase();
@@ -29,6 +39,10 @@ export function CatalogClient({
         (product) =>
           (!promotionOnly || product.promotionalPrice) &&
           (!audience || product.genderCategory === audience) &&
+          (!category ||
+            product.category.localeCompare(category, "pt-BR", {
+              sensitivity: "base",
+            }) === 0) &&
           (!size || product.sizes.includes(size)) &&
           (!color || product.colors.includes(color)) &&
           (!normalized ||
@@ -43,7 +57,7 @@ export function CatalogClient({
         if (sort === "maior") return priceB - priceA;
         return b.id.localeCompare(a.id);
       });
-  }, [audience, color, products, promotionOnly, search, size, sort]);
+  }, [audience, category, color, products, promotionOnly, search, size, sort]);
 
   return (
     <div className="container-store py-12">
@@ -75,6 +89,10 @@ export function CatalogClient({
           <option value="MASCULINO">Masculino</option>
           <option value="FEMININO">Feminino</option>
           <option value="INFANTIL">Infantil</option>
+        </select>
+        <select className="input-store !w-auto" value={category} onChange={(event) => setCategory(event.target.value)}>
+          <option value="">Todas as categorias</option>
+          {categories.map((item) => <option key={item}>{item}</option>)}
         </select>
         <select className="input-store !w-auto" value={size} onChange={(event) => setSize(event.target.value)}>
           <option value="">Todos os tamanhos</option>

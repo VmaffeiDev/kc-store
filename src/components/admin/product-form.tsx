@@ -60,7 +60,7 @@ export function ProductForm() {
           <h2 className="font-display text-3xl">Informacoes principais</h2>
           <div className="mt-5 grid gap-4 md:grid-cols-2">
             <label className="text-xs font-bold md:col-span-2">Nome<input name="name" required className="input-store mt-2" /></label>
-            <label className="text-xs font-bold">Categoria<select name="category" className="input-store mt-2"><option>Camisas</option><option>Vestidos</option><option>Calcados</option><option>Acessorios</option></select></label>
+            <label className="text-xs font-bold">Categoria<select name="category" className="input-store mt-2"><option>Camisas</option><option>Vestidos</option><option>Calcados</option><option>Acessorios</option><option>Perfumes</option></select></label>
             <label className="text-xs font-bold">Publico<select name="genderCategory" className="input-store mt-2"><option>MASCULINO</option><option>FEMININO</option><option>INFANTIL</option><option>UNISSEX</option></select></label>
             <label className="text-xs font-bold">Preco<input name="price" type="number" step="0.01" required className="input-store mt-2" /></label>
             <label className="text-xs font-bold">Preco promocional<input name="promotionalPrice" type="number" step="0.01" className="input-store mt-2" /></label>

@@ -20,6 +20,7 @@ const nav = [
   ["Masculino", "/produtos?publico=MASCULINO"],
   ["Feminino", "/produtos?publico=FEMININO"],
   ["Infantil", "/produtos?publico=INFANTIL"],
+  ["Perfumes", "/produtos?categoria=Perfumes"],
   ["Promocoes", "/produtos?promocao=1"],
   ["Contato", "/#contato"],
 ];
@@ -43,7 +44,7 @@ export function Header() {
           K&amp;C STORE
         </Link>
 
-        <nav className="hidden items-center gap-7 lg:flex">
+        <nav className="hidden items-center gap-5 xl:flex">
           {nav.map(([label, href]) => (
             <Link
               key={href}
@@ -103,7 +104,7 @@ export function Header() {
           <button
             aria-label={menuOpen ? "Fechar menu" : "Abrir menu"}
             onClick={() => setMenuOpen((value) => !value)}
-            className="grid size-10 place-items-center lg:hidden"
+            className="grid size-10 place-items-center xl:hidden"
           >
             {menuOpen ? <PiX size={25} /> : <PiList size={25} />}
           </button>
@@ -119,14 +120,14 @@ export function Header() {
             id="header-search"
             name="busca"
             autoFocus
-            placeholder="Busque por camisa, vestido, calcado..."
+            placeholder="Busque por camisa, vestido, perfume..."
             className="h-12 w-full rounded-sm bg-white px-4 text-sm text-[#18211e]"
           />
         </form>
       )}
 
       {menuOpen && (
-        <nav className="border-t border-white/10 bg-[#07362c] px-5 py-5 lg:hidden">
+        <nav className="border-t border-white/10 bg-[#07362c] px-5 py-5 xl:hidden">
           <div className="container-store grid gap-1">
             {nav.map(([label, href]) => (
               <Link
