@@ -16,6 +16,7 @@ export default async function ProductsPage({
     <CatalogClient
       products={products}
       initialAudience={typeof params.publico === "string" ? params.publico : ""}
+      initialCategory={typeof params.categoria === "string" ? params.categoria : ""}
       initialSearch={typeof params.busca === "string" ? params.busca : ""}
       promotionOnly={params.promocao === "1"}
     />
