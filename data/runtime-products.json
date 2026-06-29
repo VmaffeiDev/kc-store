@@ -1,5 +1,26 @@
 [
   {
+    "id": "preview_mqzagn5u",
+    "name": "Teste Editar Excluir",
+    "slug": "teste-editar-excluir-mqzagn5u",
+    "sku": "KC-UNI-MQZAGN5U",
+    "category": "Perfumes",
+    "genderCategory": "UNISSEX",
+    "price": 10,
+    "material": "Teste",
+    "shortDescription": "Produto temporario",
+    "description": "Produto temporario para validar edicao e exclusao.",
+    "image": "https://raw.githubusercontent.com/VmaffeiDev/kc-store/main/public/images/product-linen-shirt.png",
+    "featured": false,
+    "sizes": [
+      "UN"
+    ],
+    "colors": [
+      "Teste"
+    ],
+    "stock": 1
+  },
+  {
     "id": "preview_mqz9z10p",
     "name": "blusa",
     "slug": "blusa-mqz9z10p",
