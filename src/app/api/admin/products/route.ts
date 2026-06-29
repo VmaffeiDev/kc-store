@@ -47,6 +47,17 @@ const slugify = (value: string) =>
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/(^-|-$)/g, "");
 
+function getProductValidationMessage(error: z.ZodError) {
+  const fields = new Set(error.issues.map((issue) => String(issue.path[0])));
+  if (fields.has("name")) return "Preencha o nome do produto.";
+  if (fields.has("price")) return "Preencha o preco do produto.";
+  if (fields.has("image")) return "Selecione uma imagem valida pelo painel.";
+  if (fields.has("shortDescription") || fields.has("description")) {
+    return "Preencha a descricao curta e a descricao completa.";
+  }
+  return "Revise os campos obrigatorios do produto.";
+}
+
 export async function POST(request: Request) {
   try {
     const actor = await requireRole(["OWNER", "STAFF"]);
@@ -134,6 +145,12 @@ export async function POST(request: Request) {
     });
     return Response.json(product, { status: 201 });
   } catch (error) {
+    if (error instanceof z.ZodError) {
+      return Response.json(
+        { error: getProductValidationMessage(error) },
+        { status: 400 },
+      );
+    }
     const message = getErrorMessage(error);
     return Response.json(
       { error: message },
