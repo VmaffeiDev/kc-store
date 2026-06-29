@@ -1,12 +1,35 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { PiMagicWand, PiUploadSimple } from "react-icons/pi";
+
+type GeneratedDescription = {
+  shortDescription?: string;
+  fullDescription?: string;
+  seoTitle?: string;
+  seoDescription?: string;
+};
+
+async function getResponseError(response: Response, fallback: string) {
+  const body = (await response.json().catch(() => null)) as {
+    error?: string;
+  } | null;
+  return body?.error ?? fallback;
+}
 
 export function ProductForm() {
   const [message, setMessage] = useState("");
-  const [generated, setGenerated] = useState<Record<string, unknown> | null>(null);
+  const [generated, setGenerated] = useState<GeneratedDescription | null>(null);
+  const [imageName, setImageName] = useState("");
+  const [previewUrl, setPreviewUrl] = useState("");
   const [saving, setSaving] = useState(false);
+  const [generating, setGenerating] = useState(false);
+
+  useEffect(() => {
+    return () => {
+      if (previewUrl.startsWith("blob:")) URL.revokeObjectURL(previewUrl);
+    };
+  }, [previewUrl]);
 
   return (
     <form
@@ -14,6 +37,10 @@ export function ProductForm() {
       onSubmit={async (event) => {
         event.preventDefault();
         const form = event.currentTarget;
+        if (!form.reportValidity()) {
+          setMessage("Preencha os campos obrigatorios antes de salvar.");
+          return;
+        }
         setSaving(true);
         setMessage("Enviando imagem...");
         const formData = new FormData(form);
@@ -29,14 +56,19 @@ export function ProductForm() {
           method: "POST",
           body: uploadData,
         });
-        const uploadBody = await uploadResponse.json();
         if (!uploadResponse.ok) {
-          setMessage(uploadBody.error ?? "Nao foi possivel enviar a imagem.");
+          setMessage(
+            await getResponseError(
+              uploadResponse,
+              "Nao foi possivel enviar a imagem.",
+            ),
+          );
           setSaving(false);
           return;
         }
+        const uploadBody = await uploadResponse.json();
 
-        setMessage("Salvando produto...");
+        setMessage("Imagem enviada. Salvando produto...");
         const data = Object.fromEntries(formData);
         delete data.image;
         data.image = uploadBody.url;
@@ -45,13 +77,18 @@ export function ProductForm() {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(data),
         });
-        const body = await response.json();
-        setMessage(
-          response.ok
-            ? "Produto salvo e publicado na loja."
-            : body.error ?? "Nao foi possivel salvar.",
-        );
-        if (response.ok) form.reset();
+        if (!response.ok) {
+          setMessage(
+            await getResponseError(response, "Nao foi possivel salvar."),
+          );
+          setSaving(false);
+          return;
+        }
+        setMessage("Produto salvo e publicado na loja.");
+        form.reset();
+        setGenerated(null);
+        setImageName("");
+        setPreviewUrl("");
         setSaving(false);
       }}
     >
@@ -75,6 +112,13 @@ export function ProductForm() {
             onClick={async (event) => {
               const form = event.currentTarget.form!;
               const data = new FormData(form);
+              const name = String(data.get("name") ?? "").trim();
+              const price = Number(data.get("price"));
+              if (name.length < 2 || !Number.isFinite(price) || price <= 0) {
+                setMessage("Preencha nome e preco antes de gerar a descricao.");
+                return;
+              }
+              setGenerating(true);
               setMessage("Gerando descricao...");
               const response = await fetch("/api/ai/generate-product-description", {
                 method: "POST",
@@ -90,13 +134,25 @@ export function ProductForm() {
                   price: data.get("price"),
                 }),
               });
-              const body = await response.json();
-              if (response.ok) setGenerated(body);
-              setMessage(response.ok ? "Texto gerado. Revise antes de salvar." : body.error ?? "IA nao configurada.");
+              if (!response.ok) {
+                setMessage(
+                  await getResponseError(
+                    response,
+                    "Nao foi possivel gerar a descricao.",
+                  ),
+                );
+                setGenerating(false);
+                return;
+              }
+              const body = (await response.json()) as GeneratedDescription;
+              setGenerated(body);
+              setMessage("Texto gerado. Revise antes de salvar.");
+              setGenerating(false);
             }}
+            disabled={generating}
             className="button-secondary mt-5"
           >
-            <PiMagicWand /> Gerar descricao com IA
+            <PiMagicWand /> {generating ? "Gerando..." : "Gerar descricao com IA"}
           </button>
         </section>
         <section className="surface bg-white p-6">
@@ -113,8 +169,37 @@ export function ProductForm() {
         <section className="surface bg-white p-6">
           <h2 className="font-display text-3xl">Imagens</h2>
           <label className="mt-5 grid min-h-48 cursor-pointer place-items-center border border-dashed border-[#18211e]/25 text-center text-sm text-[#6f746f]">
-            <span><PiUploadSimple size={30} className="mx-auto mb-2" />Selecionar imagem principal<br /><small>JPG, PNG ou WebP, ate 5 MB</small></span>
-            <input name="image" type="file" accept="image/jpeg,image/png,image/webp" required className="hidden" />
+            {previewUrl ? (
+              <span className="grid gap-3 p-3">
+                <span
+                  aria-label="Pre-visualizacao da imagem selecionada"
+                  className="mx-auto aspect-[4/5] h-56 rounded-sm bg-cover bg-center"
+                  style={{ backgroundImage: `url("${previewUrl}")` }}
+                />
+                <strong className="text-[#0d4638]">{imageName}</strong>
+                <small>Clique para trocar a imagem.</small>
+              </span>
+            ) : (
+              <span><PiUploadSimple size={30} className="mx-auto mb-2" />Selecionar imagem principal<br /><small>JPG, PNG ou WebP, ate 5 MB</small></span>
+            )}
+            <input
+              name="image"
+              type="file"
+              accept="image/jpeg,image/png,image/webp"
+              required
+              className="hidden"
+              onChange={(event) => {
+                const file = event.currentTarget.files?.[0];
+                if (!file) {
+                  setImageName("");
+                  setPreviewUrl("");
+                  return;
+                }
+                setImageName(file.name);
+                setPreviewUrl(URL.createObjectURL(file));
+                setMessage("Imagem selecionada. Agora preencha os dados e salve o produto.");
+              }}
+            />
           </label>
         </section>
         <section className="surface bg-white p-6">
