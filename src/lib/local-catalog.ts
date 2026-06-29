@@ -3,12 +3,22 @@ import "server-only";
 import { mkdir, readFile, rename, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { products as seedProducts } from "@/data/catalog";
+import {
+  hasGithubContentConfig,
+  readGithubJsonFile,
+  writeGithubJsonFile,
+} from "@/services/github-content";
 import type { CatalogProduct } from "@/types/store";
 
 const dataDirectory = path.join(process.cwd(), "data");
 const dataFile = path.join(dataDirectory, "runtime-products.json");
+const githubDataFile = "data/runtime-products.json";
 
 async function readRuntimeProducts(): Promise<CatalogProduct[]> {
+  if (hasGithubContentConfig()) {
+    return readGithubJsonFile<CatalogProduct[]>(githubDataFile, []);
+  }
+
   try {
     return JSON.parse(await readFile(dataFile, "utf8")) as CatalogProduct[];
   } catch (error) {
@@ -27,12 +37,22 @@ export async function findCatalogProductBySlug(slug: string) {
 }
 
 export async function saveRuntimeProduct(product: CatalogProduct) {
-  await mkdir(dataDirectory, { recursive: true });
   const products = await readRuntimeProducts();
   const nextProducts = [
     product,
     ...products.filter((candidate) => candidate.id !== product.id),
   ];
+
+  if (hasGithubContentConfig()) {
+    await writeGithubJsonFile(
+      githubDataFile,
+      nextProducts,
+      `feat: publish product ${product.name}`,
+    );
+    return product;
+  }
+
+  await mkdir(dataDirectory, { recursive: true });
   const temporaryFile = `${dataFile}.tmp`;
   await writeFile(temporaryFile, JSON.stringify(nextProducts, null, 2), "utf8");
   await rename(temporaryFile, dataFile);

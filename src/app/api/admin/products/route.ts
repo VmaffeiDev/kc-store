@@ -5,6 +5,19 @@ import { getErrorMessage } from "@/lib/utils";
 import { saveRuntimeProduct } from "@/lib/local-catalog";
 import type { CatalogProduct } from "@/types/store";
 
+const isPanelImageUrl = (value: string) => {
+  if (value.startsWith("/uploads/")) return true;
+  try {
+    const url = new URL(value);
+    return (
+      url.protocol === "https:" &&
+      ["raw.githubusercontent.com", "res.cloudinary.com"].includes(url.hostname)
+    );
+  } catch {
+    return false;
+  }
+};
+
 const schema = z.object({
   name: z.string().min(2),
   category: z.string().min(2),
@@ -16,7 +29,7 @@ const schema = z.object({
   color: z.string().min(2),
   size: z.string().min(1),
   stock: z.coerce.number().int().nonnegative(),
-  image: z.string().startsWith("/uploads/"),
+  image: z.string().refine(isPanelImageUrl, "Use uma imagem enviada pelo painel."),
   shortDescription: z.string().min(10),
   description: z.string().min(20),
   seoTitle: z.string().optional(),
