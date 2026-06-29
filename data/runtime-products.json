@@ -1,12 +1,12 @@
 [
   {
     "id": "preview_mqzagn5u",
-    "name": "Teste Editar Excluir",
+    "name": "Teste Editado Excluir",
     "slug": "teste-editar-excluir-mqzagn5u",
     "sku": "KC-UNI-MQZAGN5U",
     "category": "Perfumes",
     "genderCategory": "UNISSEX",
-    "price": 10,
+    "price": 12,
     "material": "Teste",
     "shortDescription": "Produto temporario",
     "description": "Produto temporario para validar edicao e exclusao.",
@@ -18,7 +18,7 @@
     "colors": [
       "Teste"
     ],
-    "stock": 1
+    "stock": 2
   },
   {
     "id": "preview_mqz9z10p",
