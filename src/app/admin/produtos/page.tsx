@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
-import { PiPencil, PiPlus, PiTrash } from "react-icons/pi";
+import { PiPencil, PiPlus } from "react-icons/pi";
+import { ProductDeleteButton } from "@/components/admin/product-delete-button";
 import { formatCurrency } from "@/data/catalog";
 import { getCatalogProducts } from "@/lib/local-catalog";
 
@@ -22,7 +23,18 @@ export default async function AdminProductsPage() {
               <tr key={product.id}>
                 <td className="py-4"><div className="flex items-center gap-3"><div className="relative size-14 overflow-hidden bg-[#eadcc8]"><Image src={product.image} alt="" fill className="object-cover" /></div><div><strong>{product.name}</strong><small className="block text-[#777]">{product.sku}</small></div></div></td>
                 <td>{product.genderCategory}</td><td>{formatCurrency(product.promotionalPrice ?? product.price)}</td><td>{product.stock}</td><td><span className="rounded-full bg-[#eaf1ed] px-3 py-1 text-xs text-[#0d4638]">Ativo</span></td>
-                <td><div className="flex gap-2"><button aria-label="Editar" className="grid size-9 place-items-center border"><PiPencil /></button><button aria-label="Excluir" className="grid size-9 place-items-center border text-[#a54c30]"><PiTrash /></button></div></td>
+                <td>
+                  <div className="flex gap-2">
+                    <Link
+                      href={`/admin/produtos/${product.id}/editar`}
+                      aria-label={`Editar ${product.name}`}
+                      className="grid size-9 place-items-center border"
+                    >
+                      <PiPencil />
+                    </Link>
+                    <ProductDeleteButton productId={product.id} productName={product.name} />
+                  </div>
+                </td>
               </tr>
             ))}
           </tbody>
