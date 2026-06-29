@@ -1,0 +1,23 @@
+[
+  {
+    "id": "preview_mqz917gu",
+    "name": "Teste Smoke Remover",
+    "slug": "teste-smoke-remover-mqz917gu",
+    "sku": "KC-UNI-MQZ917GU",
+    "category": "Perfumes",
+    "genderCategory": "UNISSEX",
+    "price": 1,
+    "material": "Teste",
+    "shortDescription": "Produto de teste",
+    "description": "Produto de teste temporario para validar o admin.",
+    "image": "https://raw.githubusercontent.com/VmaffeiDev/kc-store/main/public/images/product-linen-shirt.png",
+    "featured": false,
+    "sizes": [
+      "UN"
+    ],
+    "colors": [
+      "Teste"
+    ],
+    "stock": 0
+  }
+]
