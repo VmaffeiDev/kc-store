@@ -3,6 +3,11 @@ import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { requireRole } from "@/lib/authorization";
 import { getErrorMessage } from "@/lib/utils";
+import { hasCloudinaryConfig, uploadProductImage } from "@/services/cloudinary";
+import {
+  hasGithubContentConfig,
+  writeGithubFile,
+} from "@/services/github-content";
 
 const allowedTypes = new Map([
   ["image/jpeg", "jpg"],
@@ -29,6 +34,40 @@ export async function POST(request: Request) {
       return Response.json(
         { error: "A imagem deve ter no maximo 5 MB." },
         { status: 400 },
+      );
+    }
+
+    if (hasCloudinaryConfig()) {
+      const upload = await uploadProductImage(file);
+      return Response.json(
+        {
+          url: upload.secure_url,
+          publicId: upload.public_id,
+          width: upload.width,
+          height: upload.height,
+        },
+        { status: 201 },
+      );
+    }
+
+    if (hasGithubContentConfig()) {
+      const fileName = `${randomUUID()}.${extension}`;
+      const filePath = `public/uploads/${fileName}`;
+      const url = await writeGithubFile(
+        filePath,
+        Buffer.from(await file.arrayBuffer()),
+        `chore: upload product image ${fileName}`,
+      );
+      return Response.json({ url }, { status: 201 });
+    }
+
+    if (process.env.VERCEL) {
+      return Response.json(
+        {
+          error:
+            "Upload permanente nao configurado. Configure Cloudinary ou GITHUB_CONTENT_TOKEN na Vercel.",
+        },
+        { status: 503 },
       );
     }
 

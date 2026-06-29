@@ -39,6 +39,10 @@ Sem `DATABASE_URL`, configure `PREVIEW_ADMIN_EMAIL`,
 modo, produtos e imagens ficam na maquina que executa o site, mas checkout e
 pagamentos reais permanecem desativados.
 
+Na Vercel sem banco/Cloudinary, configure `GITHUB_CONTENT_TOKEN`,
+`GITHUB_CONTENT_REPO` e `GITHUB_CONTENT_BRANCH` para o painel salvar produtos e
+imagens no repositorio como fallback persistente.
+
 ## Mercado Pago
 
 O dinheiro das vendas e direcionado para a conta Mercado Pago proprietaria do
@@ -66,6 +70,8 @@ apos um Webhook com assinatura valida.
 - Melhor Envio: use primeiro o sandbox. Sem token, a cotacao retorna opcoes de
   demonstracao.
 - Cloudinary: o admin usa assinatura server-side em `/api/upload/signature`.
+- GitHub Content: fallback para deploys Vercel sem banco; use token com acesso
+  restrito ao repositorio.
 - OpenAI: o modelo padrao e `gpt-5.4-mini`, configuravel por `OPENAI_MODEL`.
 - Resend: e-mails entram em `EmailOutbox` e sao processados pelo worker.
 
