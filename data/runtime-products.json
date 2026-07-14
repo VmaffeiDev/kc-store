@@ -1,5 +1,28 @@
 [
   {
+    "id": "preview_mrjwcpbd",
+    "name": "Roupão ",
+    "slug": "roupao-mrjwcpbd",
+    "sku": "KC-FEM-MRJWCPBD",
+    "category": "Camisas",
+    "genderCategory": "FEMININO",
+    "price": 140,
+    "material": "Nao informado",
+    "shortDescription": "Roupão com acabamento selecionado, pensado para compor looks estilo casual com praticidade e presenca.",
+    "description": "O Roupão e uma escolha versatil para o publico feminino. Com acabamento selecionado, opcoes em Cor única e disponibilidade em P, M e G, combina conforto, acabamento bonito e uso facil no dia a dia. Ideal para quem busca uma peca de camisas com visual atual e pronta para diferentes momentos.",
+    "image": "https://raw.githubusercontent.com/VmaffeiDev/kc-store/main/public/uploads/f6d0a55b-9ff3-4cc5-a9c4-93ae249b0db0.jpg",
+    "badge": "Novo",
+    "featured": true,
+    "sizes": [
+      "P",
+      "M e G"
+    ],
+    "colors": [
+      "Cor única"
+    ],
+    "stock": 10
+  },
+  {
     "id": "preview_mrjwbihs",
     "name": "Roupão ",
     "slug": "roupao-mrjwbihs",
