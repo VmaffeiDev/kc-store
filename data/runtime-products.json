@@ -1,5 +1,33 @@
 [
   {
+    "id": "preview_mrjwa281",
+    "name": "O vinho da estação chegou para transformar o seu look.",
+    "slug": "o-vinho-da-estacao-chegou-para-transformar-o-seu-look-mrjwa281",
+    "sku": "KC-FEM-MRJWA281",
+    "category": "Camisas",
+    "genderCategory": "FEMININO",
+    "price": 260,
+    "material": "Nao informado",
+    "shortDescription": "O Vinho Da Estação Chegou Para Transformar O Seu Look. com acabamento selecionado, pensado para compor looks estilo casual com praticidade e presenca.",
+    "description": "O O Vinho Da Estação Chegou Para Transformar O Seu Look. e uma escolha versatil para o publico feminino. Com acabamento selecionado, opcoes em Verde, Vermelho, Vinho, Preto, Rosa e Branco e disponibilidade em P, M, G, combina conforto, acabamento bonito e uso facil no dia a dia. Ideal para quem busca uma peca de camisas com visual atual e pronta para diferentes momentos.",
+    "image": "https://raw.githubusercontent.com/VmaffeiDev/kc-store/main/public/uploads/4d78006e-1722-44e4-a46c-06ac36579858.jpg",
+    "badge": "Novo",
+    "featured": true,
+    "sizes": [
+      "P",
+      "M",
+      "G"
+    ],
+    "colors": [
+      "Verde",
+      "Vermelho",
+      "Vinho",
+      "Preto",
+      "Rosa e Branco"
+    ],
+    "stock": 8
+  },
+  {
     "id": "preview_mrjw6vfa",
     "name": "Conjunto elegante ",
     "slug": "conjunto-elegante-mrjw6vfa",
