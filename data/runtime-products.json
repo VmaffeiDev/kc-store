@@ -1,1 +1,26 @@
-[]
+[
+  {
+    "id": "preview_mrjw6vfa",
+    "name": "Conjunto elegante ",
+    "slug": "conjunto-elegante-mrjw6vfa",
+    "sku": "KC-FEM-MRJW6VFA",
+    "category": "Camisas",
+    "genderCategory": "FEMININO",
+    "price": 299.9,
+    "material": "Nao informado",
+    "shortDescription": "O conjunto que está conquistando nossas clientes! \n",
+    "description": "\nElegante, confortável e com um caimento incrível. Uma peça indispensável para compor looks sofisticados neste inverno.\n\n✨ Qualidade premium\n✨ Caimento impecável\n✨ Conforto o dia todo",
+    "image": "https://raw.githubusercontent.com/VmaffeiDev/kc-store/main/public/uploads/6a5323ee-0355-49ae-b62d-14bffb24d601.jpg",
+    "badge": "Novo",
+    "featured": true,
+    "sizes": [
+      "P",
+      "M e G"
+    ],
+    "colors": [
+      "Cinza",
+      "Branco e Marsala"
+    ],
+    "stock": 6
+  }
+]
