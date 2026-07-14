@@ -1,5 +1,28 @@
 [
   {
+    "id": "preview_mrjwbihs",
+    "name": "Roupão ",
+    "slug": "roupao-mrjwbihs",
+    "sku": "KC-FEM-MRJWBIHS",
+    "category": "Camisas",
+    "genderCategory": "FEMININO",
+    "price": 140,
+    "material": "Nao informado",
+    "shortDescription": "Roupão com acabamento selecionado, pensado para compor looks estilo casual com praticidade e presenca.",
+    "description": "O Roupão e uma escolha versatil para o publico feminino. Com acabamento selecionado, opcoes em Cor única e disponibilidade em P,M e G, combina conforto, acabamento bonito e uso facil no dia a dia. Ideal para quem busca uma peca de camisas com visual atual e pronta para diferentes momentos.",
+    "image": "https://raw.githubusercontent.com/VmaffeiDev/kc-store/main/public/uploads/a33b9243-f186-4f8a-ac81-052932b8c4a5.jpg",
+    "badge": "Novo",
+    "featured": true,
+    "sizes": [
+      "P",
+      "M e G"
+    ],
+    "colors": [
+      "Cor única"
+    ],
+    "stock": 10
+  },
+  {
     "id": "preview_mrjwa281",
     "name": "O vinho da estação chegou para transformar o seu look.",
     "slug": "o-vinho-da-estacao-chegou-para-transformar-o-seu-look-mrjwa281",
